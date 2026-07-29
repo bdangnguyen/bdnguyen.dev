@@ -1,0 +1,35 @@
+---
+interface Props {
+	title: string;
+	description: string;
+	pubDate: Date;
+}
+
+const { title, description, pubDate } = Astro.props;
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content={description} />
+		<title>{title}</title>
+	</head>
+	<body>
+		<a href="/blog">&larr; Back to blog</a>
+		<article>
+			<header>
+				<h1>{title}</h1>
+				<p>
+					<time datetime={pubDate.toISOString()}>
+						{pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+					</time>
+				</p>
+			</header>
+			<slot />
+		</article>
+	</body>
+</html>

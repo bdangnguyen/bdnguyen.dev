@@ -1,5 +1,5 @@
 {
-  "name": "personal-astro-site",
+  "name": "bdnguyen.dev",
   "type": "module",
   "version": "0.0.1",
   "engines": {
@@ -13,5 +13,8 @@
   },
   "dependencies": {
     "astro": "^7.1.5"
+  },
+  "devDependencies": {
+    "wrangler": "^4.115.0"
   }
 }
