@@ -1,15 +1,18 @@
 ---
-title: "Revamping my personal site for the 6th time"
-description: "Essentially a how to host using Porkbun for domain names, Cloudflare workers for deployment, and Astro to generate a static site."
-pubDate: 2026-07-28
+title: "Yet another rewrite. 2026 Edition"
+publishDate: 2026-07-28
+description: "A walkthrough building and deploying this site. Using Porkbun, Cloudflare workers, and Astro."
+tags: [astro, cloudflare, porkbun, dns]
 ---
 
 This site is built with [Astro](https://astro.build), deployed to [Cloudflare Workers](https://workers.cloudflare.com/), with the domain registered through [Porkbun](https://porkbun.com/). Here's how it's all wired together.
 
 ## 1. Registering a domain
-The first step would be to get a domain name. Pick your favorite domain registar of choice. I personally used [Porkbun](https://porkbun.com/) to get mine as its reasonably cheap. For the rest of the post, I'll be referring to Porkbun specific documents, but other domain registrars should support the same functionality.
+
+The first step would be to get a domain name. Pick your favorite domain registrar of choice. I personally used [Porkbun](https://porkbun.com/) to get mine as it's reasonably cheap. For the rest of the post, I'll be referring to Porkbun specific documents, but other domain registrars should support the same functionality.
 
 ## 2. Pointing the domain to Cloudflare
+
 By default, your domain registrar is also the DNS provider for the domain. Since we're using Cloudflare to host the website, the Cloudflare workers need to be reachable by whoever is looking at the website on their browser. For that to work, Cloudflare needs to be the DNS provider and not Porkbun. Here, we tell Porkbun to have the domain point to Cloudflare's nameservers. This is Cloudflare's [full (nameserver) setup](https://developers.cloudflare.com/dns/zone-setups/full-setup/setup/), and Porkbun's [nameserver change instructions](https://kb.porkbun.com/article/22-how-to-change-your-nameservers):
 
 1. In the Cloudflare dashboard, go to **Domains** and choose **Onboard a domain**. Enter the apex domain (e.g. `example.com`) and pick a plan — Cloudflare scans and imports any existing DNS records automatically.
@@ -37,7 +40,7 @@ With the domain sorted, the project started from the standard Astro starter:
 npm create astro@latest
 ```
 
-Astro's content collections handle the blog. Post metadata (title, description, publish date) is validated with a `zod` schema in `src/content.config.ts`, and each post lives as a Markdown file under `src/content/blog/`. A dynamic route (`src/pages/blog/[...id].astro`) renders each post, and `src/pages/blog/index.astro` lists them all.
+Astro's content collections handle the blog. Post metadata (title, description, publish date) is validated with a `zod` schema in `src/content.config.ts`, and each post lives as a Markdown file under `src/content/post/`.
 
 ## 4. Setting up the Cloudflare worker
 
@@ -45,21 +48,21 @@ Cloudflare Workers can serve static assets directly. To have it pick up the file
 
 ```jsonc
 {
-  "name": "cloudflare-worker-name",
-  "compatibility_date": "<initial deployment date>",
-  "assets": {
-    "directory": "./dist"
-  }
+	"name": "cloudflare-worker-name",
+	"compatibility_date": "<initial deployment date>",
+	"assets": {
+		"directory": "./dist",
+	},
 }
 ```
 
 The `assets.directory` field points at Astro's build output.
 
-With the Worker created and the domain already living in Cloudflare, the custom domain gets attached from the dashboard under **Workers & Pages → your worker → Settings → Domains & Routes** — Cloudflare provisions the DNS record and TLS certificate automatically. This can be done before the first deploy; the domain will just 404 until there's a build to serve.
+With the Worker created and the domain already living in Cloudflare, the custom domain gets attached from the dashboard under **Workers & Pages → your worker → Settings → Domains & Routes**. Cloudflare provisions the DNS record and TLS certificate automatically. This can be done before the first deploy; the domain will just 404 until there's a build to serve.
 
 ## 5. Deploying
 
-With the domain already wired to the Worker, every deploy after this just needs:
+With the domain already wired to the Worker, every manual deploy after this just needs:
 
 ```bash
 npm run build

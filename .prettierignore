@@ -1,0 +1,15 @@
+*.min.js
+node_modules
+
+# cache-dirs
+**/.cache
+
+pnpm-lock.yaml
+dist
+.astro
+.wrangler
+
+# prettier-plugin-astro@0.14.1 (latest) fails to parse any <script> tag
+# nested inside a {condition && (...)} block. Remove this line if a future
+# plugin release fixes it: https://github.com/withastro/prettier-plugin-astro
+src/layouts/BlogPost.astro
