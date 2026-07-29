@@ -41,6 +41,8 @@ export interface SiteConfig {
 		options: Intl.DateTimeFormatOptions;
 	};
 	description: string;
+	/** Homepage bio, one paragraph per array entry. Falls back to `description` if unset. */
+	bio?: string[];
 	lang: string;
 	ogLocale: string;
 	sortPostsByUpdatedDate: boolean;

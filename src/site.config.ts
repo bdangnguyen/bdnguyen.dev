@@ -12,7 +12,12 @@ export const siteConfig: SiteConfig = {
 		},
 	},
 	description:
-		"Hi my name is Bryan! I'm currently a machine learning engineer at Amazon working on search relevance ranking for sponsored products and brands. I was previously part of the financial tech org where I had worked on Amazon's ledger, debt collection, and expansion of payment methods for sellers worldwide. \n\n I like to build things that are useful for others, and I'm curious about getting machines to learn how to play games. Hopefully, this site will serve as a way to document my journey and what I've learned to spark people's curiosity. \n\n Outside of engineering and coding, I love to play all kinds of music and explore cuisines from around the world. Feel free to reach out if you have any recommendations for either of them!",
+		"Hi my name is Bryan! I'm currently a machine learning engineer at Amazon working on search relevance ranking for sponsored products and brands. I was previously part of the financial tech org where I had worked on Amazon's ledger, debt collection, and expansion of payment methods for sellers worldwide. I like to build things that are useful for others, and I'm curious about getting machines to learn how to play games. Hopefully, this site will serve as a way to document my journey and what I've learned to spark people's curiosity. Outside of engineering and coding, I love to play all kinds of music and explore cuisines from around the world. Feel free to reach out if you have any recommendations for either of them!",
+	bio: [
+		"Hi my name is Bryan! I'm currently a machine learning engineer at Amazon working on search relevance ranking for sponsored products and brands. I was previously part of the financial tech org where I had worked on Amazon's ledger, debt collection, and expansion of payment methods for sellers worldwide.",
+		"I like to build things that are useful for others, and I'm curious about getting machines to learn how to play games. Hopefully, this site will serve as a way to document my journey and what I've learned to spark people's curiosity.",
+		"Outside of engineering and coding, I love to play all kinds of music and explore cuisines from around the world. Feel free to reach out if you have any recommendations for either of them!",
+	],
 	lang: "en-US",
 	ogLocale: "en_US",
 	sortPostsByUpdatedDate: false,
