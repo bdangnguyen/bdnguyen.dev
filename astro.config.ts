@@ -55,7 +55,7 @@ export default defineConfig({
 			name: siteConfig.title,
 			description: siteConfig.description,
 			lang: siteConfig.lang,
-			icon: "public/icon.png",
+			icon: "public/favicon.svg",
 			icons: [
 				{
 					src: "icons/apple-touch-icon.png",
@@ -78,6 +78,7 @@ export default defineConfig({
 			theme_color: "#2bbc8a",
 			display: "standalone",
 			config: {
+				createFavicon: false,
 				insertFaviconLinks: false,
 				insertThemeColorMeta: false,
 				insertManifestLink: false,
