@@ -49,8 +49,8 @@ const readingTime: string =
 // Custom giscus themes only in prod: the giscus.app iframe can't fetch CSS from localhost / private IPs.
 const giscusThemes = import.meta.env.PROD
 	? {
-			light: new URL("/giscus-light.css", Astro.site).toString(),
-			dark: new URL("/giscus-dark.css", Astro.site).toString(),
+			light: new URL("/giscus-light-v2.css", Astro.site).toString(),
+			dark: new URL("/giscus-dark-v2.css", Astro.site).toString(),
 		}
 	: { light: "noborder_light", dark: "noborder_dark" };
 ---
