@@ -5,7 +5,7 @@ description: "A walkthrough building and deploying this site. Using Porkbun, Clo
 tags: [astro, cloudflare, porkbun, dns]
 ---
 
-This site is built with [Astro](https://astro.build), deployed to [Cloudflare Workers](https://workers.cloudflare.com/), with the domain registered through [Porkbun](https://porkbun.com/). Here's how it's all wired together.
+Over the years, I've rebuilt my personal site from ground up multiple times. It started out with a simple Jekyll GitHub pages static site, into a iteration involving custom rolled HTML, JavaScript, and CSS, into another iteration with Hugo and even Docusaurus at one point. This iteration is using [Astro](https://astro.build), deployed to [Cloudflare Workers](https://workers.cloudflare.com/), with the domain registered through [Porkbun](https://porkbun.com/). I've valued different things at each iteration, favoring simplicity in some, customizability in others, or and the purpose of the site overall has changed over the years. This time, especially in the age of AI, I wanted something with a bit more flexibility while also letting me customize it as needed, hence why I chose Atro. Instead of other static site generators that aren't JavaScript based, I decided this time to go with something JavaScript based to allow some flexibiltiy in what I wanted to do with my site. This is how I set it up in case I forget in the future or someone wants to follow.
 
 ## 1. Registering a domain
 
@@ -15,8 +15,8 @@ The first step would be to get a domain name. Pick your favorite domain registra
 
 By default, your domain registrar is also the DNS provider for the domain. Since we're using Cloudflare to host the website, the Cloudflare workers need to be reachable by whoever is looking at the website on their browser. For that to work, Cloudflare needs to be the DNS provider and not Porkbun. Here, we tell Porkbun to have the domain point to Cloudflare's nameservers. This is Cloudflare's [full (nameserver) setup](https://developers.cloudflare.com/dns/zone-setups/full-setup/setup/), and Porkbun's [nameserver change instructions](https://kb.porkbun.com/article/22-how-to-change-your-nameservers):
 
-1. In the Cloudflare dashboard, go to **Domains** and choose **Onboard a domain**. Enter the apex domain (e.g. `example.com`) and pick a plan — Cloudflare scans and imports any existing DNS records automatically.
-2. Review the imported records, especially the zone apex (`example.com`) and `www` records, and any email records (MX, SPF, DKIM, DMARC) if the domain sends or receives mail elsewhere. Nothing needs to point at the Worker yet — that gets added when the Worker's custom domain is attached in step 4.
+1. In the Cloudflare dashboard, go to **Domains** and choose **Onboard a domain**. Enter the apex domain (e.g. `example.com`) and pick a plan. Cloudflare scans and imports any existing DNS records automatically.
+2. Review the imported records, especially the zone apex (`example.com`) and `www` records, and any email records (MX, SPF, DKIM, DMARC) if the domain sends or receives mail elsewhere. Nothing needs to point at the Worker yet, that gets added when the Worker's custom domain is attached in step 4.
 3. Cloudflare's Overview page shows two assigned nameservers. Copy them exactly.
 4. In Porkbun, go to **Account → Domain Management**, find the domain, open its **Details** dropdown, and click the edit icon next to **Nameservers**. If DNSSEC is already enabled on the domain, remove the old DS record at Porkbun first and wait for its TTL to fully expire (24–48 hours) before switching nameservers.
 5. In the popup, remove all existing nameserver entries and add the two Cloudflare-assigned ones, one per line, then click **Save Nameservers** and confirm.
@@ -78,6 +78,4 @@ Running `wrangler deploy` by hand works, but it's easy to forget, and it means t
 3. Click **Connect**, authorize Cloudflare's GitHub App, and select the repository.
 4. Configure the build: a build command (`npm run build`) and the deploy command (`wrangler deploy`), plus which branch triggers a production deploy (e.g. `main`).
 5. Save. One important gotcha from Cloudflare's docs: the Worker's name in the dashboard must exactly match the `name` field in `wrangler.jsonc`, or the build fails.
-6. Push a commit — Workers Builds picks it up, runs the build, and deploys automatically. Each build also gets a preview URL under **Version History**, so a branch can be checked before it's promoted to production.
-
-From here, making any changes for the site is just: write the Markdown file, commit, push — no manual `wrangler deploy` needed.
+6. Push a commit. Workers Builds picks it up, runs the build, and deploys automatically. Each build also gets a preview URL under **Version History**, so a branch can be checked before it's promoted to production.
